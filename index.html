@@ -1,17 +1,42 @@
+<!doctype html>
 <html>
     <head>
-        <link rel="stylesheet" href="main.css">
-        <link rel="stylesheet" href="hex.css">
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>OSDev Toolkit</title>
+        <link rel="stylesheet" href="main.css" />
+        <link rel="stylesheet" href="calc.css" />
     </head>
     <body>
-        <div id="cbf"></div>
-        <div id="hex"></div>
-        <div id="links">
-            <a href="https://docs.osdev.thenest.dev" target="_blank">docs</a>
-            <a href="https://osdev.wiki" target="_blank">osdev.wiki</a>
-            <a href="https://www.felixcloutier.com/x86/" target="_blank">x86 instruction reference</a>
+        <div id="layout">
+            <div id="cbf"></div>
+            <div id="calc"></div>
+            <div id="rail">
+                <div id="links">
+                    <div id="links-title">Quick Links</div>
+                    <a
+                        href="https://osdev.wiki"
+                        target="_blank"
+                        rel="noreferrer"
+                        >osdev.wiki</a
+                    >
+                    <a
+                        href="https://cdrdv2.intel.com/v1/dl/getContent/671447"
+                        target="_blank"
+                        rel="noreferrer"
+                        >x86 Intel SDM</a
+                    >
+                    <a
+                        href="https://www.felixcloutier.com/x86/"
+                        target="_blank"
+                        rel="noreferrer"
+                        >x86 instruction reference</a
+                    >
+                </div>
+                <div id="cbf-selectors"></div>
+            </div>
         </div>
 
-        <script src="hex.js"></script>
+        <script src="calc.js"></script>
     </body>
 </html>
