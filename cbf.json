@@ -15,7 +15,7 @@
     {
         "name": "x86_64 - GPF Error Code",
         "data": [
-            { "length": 1, "label": "External" },
+            { "length": 1, "label": "External", "as": "boolean" },
             { "length": 2, "label": "Table", "match": ["GDT", "IDT", "LDT", "IDT"] },
             { "length": 13, "label": "Selector Index" }
         ]
@@ -98,24 +98,24 @@
     {
         "name": "Virtual Addresses (4-level)",
         "data": [
-            { "length": 12, "label": "Page Offset" },
-            { "length": 9, "label": "PT Index" },
-            { "length": 9, "label": "PD Index" },
-            { "length": 9, "label": "PDPT Index" },
-            { "length": 9, "label": "PML4 Index" },
+            { "length": 12, "label": "Page Offset", "as": "decimal" },
+            { "length": 9, "label": "PT Index", "as": "decimal" },
+            { "length": 9, "label": "PD Index", "as": "decimal" },
+            { "length": 9, "label": "PDPT Index", "as": "decimal" },
+            { "length": 9, "label": "PML4 Index", "as": "decimal" },
             { "length": 16, "label": "Sign Extension" }
         ]
     },
     {
         "name": "Virtual Addresses (5-level)",
         "data": [
-            { "length": 12, "label": "Page Offset" },
-            { "length": 9, "label": "PT Index" },
-            { "length": 9, "label": "PD Index" },
-            { "length": 9, "label": "PDPT Index" },
-            { "length": 9, "label": "PML4 Index" },
-            { "length": 9, "label": "PML5 Index" },
-            { "length": 7, "label": "Sign Extension" }
+            { "length": 12, "label": "Page Offset", "as": "decimal" },
+            { "length": 9, "label": "PT Index", "as": "decimal" },
+            { "length": 9, "label": "PD Index", "as": "decimal" },
+            { "length": 9, "label": "PDPT Index", "as": "decimal" },
+            { "length": 9, "label": "PML4 Index", "as": "decimal" },
+            { "length": 9, "label": "PML5 Index", "as": "decimal" },
+            { "length": 7, "label": "Sign Extension", "as": "decimal" }
         ]
     }
 ]

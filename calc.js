@@ -367,10 +367,25 @@ const updateCbf = () => {
             dataRow.length === 1 ? `${startBit}` : `${startBit}..${endBit}`;
         const valueCell = row.insertCell();
         valueCell.classList.add("cbf-value");
+
+        let valueString = value.toString(16);
+        if(dataRow.as !== undefined) {
+            switch(dataRow.as) {
+                case "decimal":
+                    valueString = value.toString(10);
+                    break;
+                case "boolean":
+                    valueString = value === 0n ? "false" : "true";
+                    break;
+                default:
+                    break;
+            }
+        }
+
         if (dataRow.match !== undefined) {
-			valueCell.innerText = `${	dataRow.match[value]} (${value.toString(16)})`;
+			valueCell.innerText = `${dataRow.match[value]} (${valueString})`;
 		} else {
-			valueCell.innerText = value.toString(16);
+			valueCell.innerText = valueString;
 		}
     }
 };
