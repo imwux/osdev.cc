@@ -356,7 +356,7 @@ const updateCbf = () => {
             "title",
             `bit: ${startBit}, length: ${dataRow.length}`,
         );
-        if (dataRow.length === 1 && value > 0) row.classList.add("active");
+        if (value > 0) row.classList.add("active");
 
         const labelCell = row.insertCell();
         labelCell.innerText = dataRow.label;
@@ -368,18 +368,23 @@ const updateCbf = () => {
         const valueCell = row.insertCell();
         valueCell.classList.add("cbf-value");
 
-        let valueString = `0x${value.toString(16)}`;
-        if (dataRow.as !== undefined) {
-            switch (dataRow.as) {
-                case "decimal":
-                    valueString = value.toString(10);
-                    break;
-                case "boolean":
-                    valueString = value === 0n ? "false" : "true";
-                    break;
-                default:
-                    break;
-            }
+        let valueString;
+        if (dataRow.as === undefined) {
+            dataRow.as = "decimal";
+        }
+
+        switch (dataRow.as) {
+            case "hex":
+                valueString = `0x${value.toString(16)}`;
+                break;
+            case "decimal":
+                valueString = value.toString(10);
+                break;
+            case "boolean":
+                valueString = value === 0n ? "false" : "true";
+                break;
+            default:
+                break;
         }
 
         if (dataRow.match !== undefined) {
