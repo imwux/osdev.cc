@@ -333,7 +333,7 @@ const updateCbf = () => {
 
     let i = 0;
     for (const dataRow of cbf[cbfSelected].data) {
-        if (dataRow.position != undefined) {
+        if (dataRow.position !== undefined) {
             if (i > dataRow.position) {
                 console.error("cbf malformed");
                 continue;
@@ -356,7 +356,7 @@ const updateCbf = () => {
             "title",
             `bit: ${startBit}, length: ${dataRow.length}`,
         );
-        if (dataRow.length == 1 && value > 0) row.classList.add("active");
+        if (dataRow.length === 1 && value > 0) row.classList.add("active");
 
         const labelCell = row.insertCell();
         labelCell.innerText = dataRow.label;
@@ -367,7 +367,26 @@ const updateCbf = () => {
             dataRow.length === 1 ? `${startBit}` : `${startBit}..${endBit}`;
         const valueCell = row.insertCell();
         valueCell.classList.add("cbf-value");
-        valueCell.innerText = value.toString(16);
+
+        let valueString = `0x${value.toString(16)}`;
+        if (dataRow.as !== undefined) {
+            switch (dataRow.as) {
+                case "decimal":
+                    valueString = value.toString(10);
+                    break;
+                case "boolean":
+                    valueString = value === 0n ? "false" : "true";
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        if (dataRow.match !== undefined) {
+            valueCell.innerText = `${dataRow.match[value]} (${valueString})`;
+        } else {
+            valueCell.innerText = valueString;
+        }
     }
 };
 
@@ -375,7 +394,7 @@ const updateBinary = () => {
     for (let i = 0; i < 64; i++) {
         const elem = binaryElements[64 - 1 - i];
 
-        if ((currentValue & (1n << BigInt(i))) == 0n) {
+        if ((currentValue & (1n << BigInt(i))) === 0n) {
             elem.classList.remove("active");
         } else {
             elem.classList.add("active");
@@ -394,9 +413,6 @@ const setCurrentValue = (value, options = {}) => {
     updateCbf();
 };
 
-/* Input */
-let activeInput = decimal;
-
 const handleInput = (input, baseMode) => {
     const result = evaluateExpression(input.value, baseMode);
     if (!result.ok) return;
@@ -412,13 +428,6 @@ const commitInput = (input, baseMode) => {
 decimal.oninput = () => handleInput(decimal, "dec");
 hex.oninput = () => handleInput(hex, "hex");
 
-decimal.onfocus = () => {
-    activeInput = decimal;
-};
-hex.onfocus = () => {
-    activeInput = hex;
-};
-
 decimal.onblur = () => commitInput(decimal, "dec");
 hex.onblur = () => commitInput(hex, "hex");
 
@@ -433,7 +442,7 @@ hex.addEventListener("keydown", (event) => commitOnEnter(event, "hex"));
 
 for (let i = 0; i < 64; i++) {
     binaryElements[64 - 1 - i].onclick = () => {
-        if ((currentValue & (1n << BigInt(i))) == 0n) {
+        if ((currentValue & (1n << BigInt(i))) === 0n) {
             setCurrentValue(currentValue | (1n << BigInt(i)));
         } else {
             setCurrentValue(currentValue & ~(1n << BigInt(i)));
