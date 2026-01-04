@@ -482,11 +482,23 @@ document.addEventListener("DOMContentLoaded", () => {
         .getElementById("file-input")
         .addEventListener("change", handleFileUpload);
     document
-        .getElementById("load-sample")
-        .addEventListener("click", loadSampleLog);
-    document
         .getElementById("event-filter")
         .addEventListener("change", handleFilterChange);
+
+    // Global paste handler
+    document.addEventListener("paste", (event) => {
+        // Don't intercept paste in input fields
+        if (event.target.tagName === "INPUT" || event.target.tagName === "TEXTAREA") {
+            return;
+        }
+
+        event.preventDefault();
+        const pastedText = event.clipboardData.getData("text");
+
+        if (pastedText.trim()) {
+            processLog(pastedText);
+        }
+    });
 });
 
 function handleFileUpload(event) {
@@ -499,17 +511,6 @@ function handleFileUpload(event) {
         processLog(content);
     };
     reader.readAsText(file);
-}
-
-function loadSampleLog() {
-    fetch("/sample-log.txt")
-        .then((res) => res.text())
-        .then((data) => {
-            processLog(data);
-        })
-        .catch((err) => {
-            console.error("Error loading sample log:", err);
-        });
 }
 
 function processLog(logContent) {
@@ -783,15 +784,15 @@ function renderRegisters(registers) {
                 <h3>General Purpose Registers</h3>
                 <div class="register-grid">
                     ${gpRegData
-                        .map(
-                            (reg) => `
+                .map(
+                    (reg) => `
                         <div class="register-item">
                             <div class="register-name">${reg.name}</div>
                             <div class="register-value">0x${reg.value}</div>
                         </div>
                     `,
-                        )
-                        .join("")}
+                )
+                .join("")}
                 </div>
             </div>
         `;
@@ -810,8 +811,8 @@ function renderRegisters(registers) {
             <div class="detail-group">
                 <h3>Segment Registers</h3>
                 ${segRegData
-                    .map(
-                        (reg) => `
+                .map(
+                    (reg) => `
                     <div class="detail-row">
                         <div class="detail-label">${reg.name}</div>
                         <div class="detail-value">
@@ -821,8 +822,8 @@ function renderRegisters(registers) {
                         </div>
                     </div>
                 `,
-                    )
-                    .join("")}
+                )
+                .join("")}
             </div>
         `;
     }
@@ -841,15 +842,15 @@ function renderRegisters(registers) {
                 <h3>Control Registers</h3>
                 <div class="register-grid">
                     ${crRegData
-                        .map(
-                            (reg) => `
+                .map(
+                    (reg) => `
                         <div class="register-item">
                             <div class="register-name">${reg.name}</div>
                             <div class="register-value">0x${reg.value}</div>
                         </div>
                     `,
-                        )
-                        .join("")}
+                )
+                .join("")}
                 </div>
             </div>
         `;

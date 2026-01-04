@@ -53,21 +53,14 @@
     color: #e9eef4;
 }
 
-#load-sample {
-    padding: 10px 16px;
-    border-radius: 12px;
-    border: 1px solid rgba(233, 238, 244, 0.18);
-    background: rgba(8, 12, 18, 0.65);
-    color: #e9eef4;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 160ms ease;
-}
-
-#load-sample:hover {
-    border-color: rgba(100, 185, 255, 0.7);
-    box-shadow: 0 4px 18px rgba(100, 185, 255, 0.25);
-    transform: translateY(-2px);
+.paste-hint {
+    padding: 12px;
+    border-radius: 8px;
+    background: rgba(78, 208, 179, 0.06);
+    color: #4ed0b3;
+    font-size: 0.85rem;
+    text-align: center;
+    border: 1px solid rgba(78, 208, 179, 0.15);
 }
 
 /* Summary */
