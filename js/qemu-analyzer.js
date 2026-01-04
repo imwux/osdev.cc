@@ -490,6 +490,8 @@ for (const [key, value] of Object.entries(EXCEPTION_INFO)) {
     EXCEPTION_NAMES[key] = value.name;
 }
 
+EXCEPTION_NAMES["ffffffff"] = "None";
+
 let allEvents = [];
 let currentFilter = "all";
 let selectedEventIndex = null;
@@ -673,11 +675,11 @@ function renderExceptionDetails(event) {
             </div>
             <div class="detail-row">
                 <div class="detail-label">Old Exception</div>
-                <div class="detail-value">${event.old_exception}</div>
+                <div class="detail-value">Vector: ${event.old_exception} | ${EXCEPTION_NAMES[event.old_exception.replace("0x", "").padStart(2, "0")]}</div>
             </div>
             <div class="detail-row">
                 <div class="detail-label">New Exception</div>
-                <div class="detail-value">${event.new_exception}</div>
+                <div class="detail-value">Vector: ${event.new_exception} | ${EXCEPTION_NAMES[event.new_exception.replace("0x", "").padStart(2, "0")]}</div>
             </div>
         </div>
     `;
