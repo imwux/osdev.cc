@@ -1,7 +1,7 @@
 [
     {
         "id": "pf",
-        "name": "x86_64 - PF Error Code",
+        "name": "x86_64 - Exception Error Code - PF",
         "data": [
             { "length": 1, "label": "Present", "as": "boolean" },
             { "length": 1, "label": "Write", "as": "boolean" },
@@ -19,7 +19,7 @@
     },
     {
         "id": "gp",
-        "name": "x86_64 - GPF Error Code",
+        "name": "x86_64 - Exception Error Code - GPF",
         "data": [
             { "length": 1, "label": "External", "as": "boolean" },
             {
@@ -32,7 +32,7 @@
     },
     {
         "id": "rflags",
-        "name": "x86_64 - RFlags",
+        "name": "x86_64 - Register - RFlags",
         "data": [
             { "length": 1, "label": "Carry Flag", "as": "boolean" },
             {
@@ -71,7 +71,7 @@
     },
     {
         "id": "dr6",
-        "name": "x86_64 - DR6",
+        "name": "x86_64 - Register - DR6",
         "data": [
             { "length": 4, "label": "Breakpoint Condition Detected" },
             { "position": 11, "length": 1, "label": "Bus-Lock Detected" },
@@ -87,7 +87,7 @@
     },
     {
         "id": "dr7",
-        "name": "x86_64 - DR7",
+        "name": "x86_64 - Register - DR7",
         "data": [
             {
                 "length": 1,
@@ -154,7 +154,7 @@
     },
     {
         "id": "ioapic-redtbl-entry",
-        "name": "IOApic REDTBL Entry",
+        "name": "IOAPIC Redirection Table Entry",
         "data": [
             { "length": 8, "label": "Interrupt Vector" },
             { "length": 3, "label": "Delivery Mode" },
@@ -169,7 +169,7 @@
     },
     {
         "id": "virt-addr-4lvl",
-        "name": "Virtual Addresses (4-level)",
+        "name": "x86_64 - Virtual Address (4-level)",
         "data": [
             { "length": 12, "label": "Page Offset", "as": "decimal" },
             { "length": 9, "label": "PT Index", "as": "decimal" },
@@ -181,7 +181,7 @@
     },
     {
         "id": "virt-addr-5lvl",
-        "name": "Virtual Addresses (5-level)",
+        "name": "x86_64 - Virtual Address (5-level)",
         "data": [
             { "length": 12, "label": "Page Offset", "as": "decimal" },
             { "length": 9, "label": "PT Index", "as": "decimal" },
@@ -190,6 +190,24 @@
             { "length": 9, "label": "PML4 Index", "as": "decimal" },
             { "length": 9, "label": "PML5 Index", "as": "decimal" },
             { "length": 7, "label": "Sign Extension", "as": "hex" }
+        ]
+    },
+    {
+        "id": "gdt-segment-descriptor",
+        "name": "x86_64 - GDT Segment Descriptor",
+        "data": [
+            { "length": 16, "label": "Segment Limit (0..15)", "as": "hex" },
+            { "length": 24, "label": "Base Address (0..24)", "as": "hex" },
+            { "length": 4, "label": "Segment Type", "as": "hex" },
+            { "length": 1, "label": "Descriptor Type (0 = system; 1 = code/data)", "as": "boolean" },
+            { "length": 2, "label": "Descriptor Privilege Level", "as": "decimal" },
+            { "length": 1, "label": "Present", "as": "boolean" },
+            { "length": 4, "label": "Segment Limit (16..19)", "as": "hex" },
+            { "length": 1, "label": "Available", "as": "boolean" },
+            { "length": 1, "label": "64-bit code segment", "as": "boolean" },
+            { "length": 1, "label": "Default operation size (true = 16-bit; false = 32-bit)", "as": "boolean" },
+            { "length": 1, "label": "Granularity", "as": "boolean" },
+            { "length": 8, "label": "Base Address (24..32)", "as": "hex" }
         ]
     }
 ]
