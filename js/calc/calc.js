@@ -3,15 +3,15 @@ const decimal = document.createElement("input");
 const hex = document.createElement("input");
 const binary = document.createElement("div");
 const binaryElements = [];
+
 for (let i = 0; i < 64; i++) {
     const e = document.createElement("div");
     e.textContent = (63 - i).toString();
     binaryElements.push(e);
     binary.appendChild(e);
 }
-const queryValueParam = new URLSearchParams(window.location.search).get(
-    "value",
-);
+
+const queryValueParam = new URLSearchParams(window.location.search).get("value");
 
 const max = BigInt("0xFFFFFFFFFFFFFFFF");
 

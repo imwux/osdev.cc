@@ -1,10 +1,9 @@
 const DECODER_STORAGE_KEY = "osdev.selectedDecoder";
+
 let selectedDecoder = -1;
 let decoders = [];
 
-const queryDecoderParam = new URLSearchParams(window.location.search).get(
-    "decoder",
-);
+const queryDecoderParam = new URLSearchParams(window.location.search).get("decoder");
 
 const normalizeDecoderKey = (value) => {
     if (typeof value !== "string") return "";
@@ -87,8 +86,7 @@ const updateDecoder = () => {
             return mask;
         };
         const startBit = i;
-        const value =
-            (currentValue >> BigInt(startBit)) & makeMask(dataRow.length);
+        const value = (currentValue >> BigInt(startBit)) & makeMask(dataRow.length);
         i += dataRow.length;
 
         const row = tbody.insertRow();
@@ -103,8 +101,7 @@ const updateDecoder = () => {
         const bitCell = row.insertCell();
         const endBit = startBit + dataRow.length - 1;
         bitCell.classList.add("bits");
-        bitCell.innerText =
-            dataRow.length === 1 ? `${startBit}` : `${startBit}..${endBit}`;
+        bitCell.innerText = dataRow.length === 1 ? `${startBit}` : `${startBit}..${endBit}`;
         const valueCell = row.insertCell();
         valueCell.classList.add("value");
 
@@ -128,7 +125,7 @@ const updateDecoder = () => {
         }
 
         if (dataRow.match !== undefined) {
-            valueCell.innerText = `${dataRow.match[value]} (${valueString})`;
+            valueCell.innerText = `${dataRow.match[value]}`;
         } else {
             valueCell.innerText = valueString;
         }
@@ -141,7 +138,8 @@ updateDecoder();
 fetch("/decoder-entries.json")
     .then((res) => res.json())
     .then((data) => {
-        decoders = data;
+        decoders = data.sort((a, b) => a.name > b.name);
+
         decoderSelector.innerHTML = "";
         for (let i = 0; i < decoders.length; i++) {
             const option = document.createElement("option");
@@ -149,6 +147,7 @@ fetch("/decoder-entries.json")
             option.textContent = decoders[i].name;
             decoderSelector.appendChild(option);
         }
+
         if (decoders.length > 0) {
             const storedKey = localStorage.getItem(DECODER_STORAGE_KEY);
             const storedIndex = findDecoderIndexByKey(storedKey);
