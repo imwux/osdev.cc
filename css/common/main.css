@@ -25,27 +25,15 @@ body {
     align-items: flex-start;
     justify-content: center;
     background:
-        radial-gradient(
-            1200px 700px at 10% -10%,
-            rgba(78, 208, 179, 0.16),
-            transparent 60%
-        ),
-        radial-gradient(
-            900px 600px at 90% 10%,
-            rgba(100, 185, 255, 0.18),
-            transparent 55%
-        ),
-        linear-gradient(140deg, #0b0f14, #0f1621);
+        radial-gradient(1200px 700px at 10% -10%, rgba(78, 208, 179, 0.16), transparent 60%),
+        radial-gradient(900px 600px at 90% 10%, rgba(100, 185, 255, 0.18), transparent 55%), linear-gradient(140deg, #0b0f14, #0f1621);
 }
 
 body::before {
     content: "";
     position: fixed;
     inset: 0;
-    background-image: radial-gradient(
-        rgba(255, 255, 255, 0.05) 1px,
-        transparent 1px
-    );
+    background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px);
     background-size: 22px 22px;
     opacity: 0.5;
     pointer-events: none;

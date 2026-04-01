@@ -175,10 +175,7 @@ const parseExpression = (input, baseMode) => {
                 continue;
             }
 
-            while (
-                operators.length &&
-                operators[operators.length - 1].value !== "("
-            ) {
+            while (operators.length && operators[operators.length - 1].value !== "(") {
                 output.push(operators.pop());
             }
             if (!operators.length) return null;
@@ -189,11 +186,7 @@ const parseExpression = (input, baseMode) => {
 
         if (token.type === "operator") {
             let op = token.value;
-            if (
-                prevType === "start" ||
-                prevType === "(" ||
-                prevType === "operator"
-            ) {
+            if (prevType === "start" || prevType === "(" || prevType === "operator") {
                 if (op === "+") op = "u+";
                 if (op === "-") op = "u-";
             }
@@ -209,10 +202,7 @@ const parseExpression = (input, baseMode) => {
                 if (topPrec === undefined) return null;
 
                 const assoc = operatorAssociativity[op] || "left";
-                if (
-                    (assoc === "left" && opPrec <= topPrec) ||
-                    (assoc === "right" && opPrec < topPrec)
-                ) {
+                if ((assoc === "left" && opPrec <= topPrec) || (assoc === "right" && opPrec < topPrec)) {
                     output.push(operators.pop());
                 } else {
                     break;

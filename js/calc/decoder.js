@@ -90,10 +90,7 @@ const updateDecoder = () => {
         i += dataRow.length;
 
         const row = tbody.insertRow();
-        row.setAttribute(
-            "title",
-            `bit: ${startBit}, length: ${dataRow.length}`,
-        );
+        row.setAttribute("title", `bit: ${startBit}, length: ${dataRow.length}`);
         if (value > 0) row.classList.add("active");
 
         const labelCell = row.insertCell();
