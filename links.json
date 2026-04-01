@@ -17,6 +17,10 @@
         {
             "name": "x86 instruction reference",
             "url": "https://www.felixcloutier.com/x86/"
+        },
+        {
+            "name": "Jon's arm reference",
+            "url": "https://arm.jonpalmisc.com/"
         }
     ]
 }
