@@ -209,5 +209,26 @@
             { "length": 1, "label": "Granularity", "as": "boolean" },
             { "length": 8, "label": "Base Address (24..32)", "as": "hex" }
         ]
+    },
+    {
+        "id": "x86_64-cr3",
+        "name": "x86_64 - Register - CR3",
+        "data": [
+            { "position": 3, "length": 1, "label": "Page-level write-through", "as": "boolean" },
+            { "length": 1, "label": "Page-level cache disable", "as": "boolean" },
+            { "position": 12, "length": 49, "label": "Physical address of pml4", "as": "hex", "note": "Length varies" },
+            { "length": 1, "label": "LAM57 for user pointers", "as": "boolean" },
+            { "length": 1, "label": "LAM48 for user pointers", "as": "boolean", "note": "Ignored if bit 61 is set" }
+        ]
+    },
+        {
+        "id": "x86_64-cr3-pcid",
+        "name": "x86_64 - Register - CR3 (PCID)",
+        "data": [
+            { "length": 12, "label": "PCID", "as": "decimal" },
+            { "length": 49, "label": "Physical address of pml4", "as": "hex", "note": "Length varies" },
+            { "length": 1, "label": "LAM57 for user pointers", "as": "boolean" },
+            { "length": 1, "label": "LAM48 for user pointers", "as": "boolean", "note": "Ignored if bit 61 is set" }
+        ]
     }
 ]
