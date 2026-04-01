@@ -98,6 +98,13 @@ const updateDecoder = () => {
 
         const labelCell = row.insertCell();
         labelCell.innerText = dataRow.label;
+        if (dataRow.note) {
+            const noteIcon = document.createElement("span");
+            noteIcon.classList.add("decoder-note");
+            noteIcon.setAttribute("title", dataRow.note);
+            noteIcon.textContent = "?";
+            labelCell.appendChild(noteIcon);
+        }
         const bitCell = row.insertCell();
         const endBit = startBit + dataRow.length - 1;
         bitCell.classList.add("bits");
