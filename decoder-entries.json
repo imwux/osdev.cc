@@ -286,5 +286,99 @@
                 "note": "Ignored if bit 61 is set"
             }
         ]
+    },
+    {
+        "id": "x86_64-pml4e",
+        "name": "x86_64 - Page Table - LVL4 (PML4) Entry",
+        "data": [
+            { "length": 1, "label": "Present", "as": "boolean" },
+            { "length": 1, "label": "Read/Write", "as": "boolean" },
+            { "length": 1, "label": "User/Supervisor", "as": "boolean" },
+            { "length": 1, "label": "Page-level Write-Through", "as": "boolean" },
+            { "length": 1, "label": "Page-level Cache Disable", "as": "boolean" },
+            { "length": 1, "label": "Accessed", "as": "boolean" },
+            { "position": 12, "length": 40, "label": "Physical address of PDPT", "as": "hex" },
+            { "position": 63, "length": 1, "label": "Execute Disable", "as": "boolean" }
+        ]
+    },
+    {
+        "id": "x86_64-pdpte",
+        "name": "x86_64 - Page Table - LVL3 (PDPT) Entry",
+        "data": [
+            { "length": 1, "label": "Present", "as": "boolean" },
+            { "length": 1, "label": "Read/Write", "as": "boolean" },
+            { "length": 1, "label": "User/Supervisor", "as": "boolean" },
+            { "length": 1, "label": "Page-level Write-Through", "as": "boolean" },
+            { "length": 1, "label": "Page-level Cache Disable", "as": "boolean" },
+            { "length": 1, "label": "Accessed", "as": "boolean" },
+            { "length": 1, "label": "Dirty", "as": "boolean", "note": "Only valid when PS=1" },
+            {
+                "length": 1,
+                "label": "Page Size",
+                "as": "boolean",
+                "branch": {
+                    "0": [
+                        { "position": 12, "length": 40, "label": "Physical address of PD", "as": "hex" },
+                        { "position": 63, "length": 1, "label": "Execute Disable", "as": "boolean" }
+                    ],
+                    "1": [
+                        { "length": 1, "label": "Global", "as": "boolean" },
+                        { "position": 12, "length": 1, "label": "PAT", "as": "boolean" },
+                        { "position": 30, "length": 22, "label": "Physical address of 1GB page", "as": "hex" },
+                        { "position": 59, "length": 4, "label": "Protection Key", "as": "decimal" },
+                        { "length": 1, "label": "Execute Disable", "as": "boolean" }
+                    ]
+                }
+            }
+        ]
+    },
+    {
+        "id": "x86_64-pde",
+        "name": "x86_64 - Page Table - LVL2 (PD) Entry",
+        "data": [
+            { "length": 1, "label": "Present", "as": "boolean" },
+            { "length": 1, "label": "Read/Write", "as": "boolean" },
+            { "length": 1, "label": "User/Supervisor", "as": "boolean" },
+            { "length": 1, "label": "Page-level Write-Through", "as": "boolean" },
+            { "length": 1, "label": "Page-level Cache Disable", "as": "boolean" },
+            { "length": 1, "label": "Accessed", "as": "boolean" },
+            { "length": 1, "label": "Dirty", "as": "boolean", "note": "Only valid when PS=1" },
+            {
+                "length": 1,
+                "label": "Page Size",
+                "as": "boolean",
+                "branch": {
+                    "0": [
+                        { "position": 12, "length": 40, "label": "Physical address of PT", "as": "hex" },
+                        { "position": 63, "length": 1, "label": "Execute Disable", "as": "boolean" }
+                    ],
+                    "1": [
+                        { "length": 1, "label": "Global", "as": "boolean" },
+                        { "position": 12, "length": 1, "label": "PAT", "as": "boolean" },
+                        { "position": 21, "length": 31, "label": "Physical address of 2MB page", "as": "hex" },
+                        { "position": 59, "length": 4, "label": "Protection Key", "as": "decimal" },
+                        { "length": 1, "label": "Execute Disable", "as": "boolean" }
+                    ]
+                }
+            }
+        ]
+    },
+    {
+        "id": "x86_64-pte",
+        "name": "x86_64 - Page Table - LVL1 (PT) Entry",
+        "data": [
+            { "length": 1, "label": "Present", "as": "boolean" },
+            { "length": 1, "label": "Read/Write", "as": "boolean" },
+            { "length": 1, "label": "User/Supervisor", "as": "boolean" },
+            { "length": 1, "label": "Page-level Write-Through", "as": "boolean" },
+            { "length": 1, "label": "Page-level Cache Disable", "as": "boolean" },
+            { "length": 1, "label": "Accessed", "as": "boolean" },
+            { "length": 1, "label": "Dirty", "as": "boolean" },
+            { "length": 1, "label": "PAT", "as": "boolean" },
+            { "length": 1, "label": "Global", "as": "boolean" },
+            { "position": 12, "length": 40, "label": "Physical address of 4KB page", "as": "hex" },
+            { "position": 59, "length": 4, "label": "Protection Key", "as": "decimal" },
+            { "length": 1, "label": "Execute Disable", "as": "boolean" }
+        ]
     }
 ]

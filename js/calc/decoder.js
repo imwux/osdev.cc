@@ -70,70 +70,74 @@ const updateDecoder = () => {
 
     const tbody = decoderTable.createTBody();
 
-    let i = 0;
-    for (const dataRow of decoders[selectedDecoder].data) {
-        if (dataRow.position !== undefined) {
-            if (i > dataRow.position) {
-                console.error("decoder malformed");
-                continue;
+    const makeMask = (length) => {
+        let mask = 0n;
+        for (let i = 0; i < length; i++) mask += 1n << BigInt(i);
+        return mask;
+    };
+
+    const processRows = (dataRows, pos) => {
+        for (const dataRow of dataRows) {
+            if (dataRow.position !== undefined) {
+                if (pos.i > dataRow.position) {
+                    console.error("decoder malformed");
+                    continue;
+                }
+                pos.i = dataRow.position;
             }
-            i = dataRow.position;
+
+            const startBit = pos.i;
+            const value = (currentValue >> BigInt(startBit)) & makeMask(dataRow.length);
+            pos.i += dataRow.length;
+
+            const row = tbody.insertRow();
+            row.setAttribute("title", `bit: ${startBit}, length: ${dataRow.length}`);
+            if (value > 0) row.classList.add("active");
+
+            const labelCell = row.insertCell();
+            labelCell.innerText = dataRow.label;
+            if (dataRow.note) {
+                const noteIcon = document.createElement("span");
+                noteIcon.classList.add("decoder-note");
+                noteIcon.setAttribute("title", dataRow.note);
+                noteIcon.textContent = "?";
+                labelCell.appendChild(noteIcon);
+            }
+
+            const bitCell = row.insertCell();
+            const endBit = startBit + dataRow.length - 1;
+            bitCell.classList.add("bits");
+            bitCell.innerText = dataRow.length === 1 ? `${startBit}` : `${startBit}..${endBit}`;
+
+            const valueCell = row.insertCell();
+            valueCell.classList.add("value");
+
+            const as = dataRow.as ?? "decimal";
+            let valueString;
+            switch (as) {
+                case "hex":
+                    valueString = `0x${value.toString(16)}`;
+                    break;
+                case "decimal":
+                    valueString = value.toString(10);
+                    break;
+                case "boolean":
+                    valueString = value === 0n ? "false" : "true";
+                    break;
+                default:
+                    break;
+            }
+
+            valueCell.innerText = dataRow.match !== undefined ? `${dataRow.match[value]}` : valueString;
+
+            if (dataRow.branch) {
+                const branchData = dataRow.branch[value.toString()];
+                if (branchData) processRows(branchData, pos);
+            }
         }
+    };
 
-        const makeMask = (length) => {
-            let mask = 0n;
-            for (let i = 0; i < length; i++) mask += 1n << BigInt(i);
-            return mask;
-        };
-        const startBit = i;
-        const value = (currentValue >> BigInt(startBit)) & makeMask(dataRow.length);
-        i += dataRow.length;
-
-        const row = tbody.insertRow();
-        row.setAttribute("title", `bit: ${startBit}, length: ${dataRow.length}`);
-        if (value > 0) row.classList.add("active");
-
-        const labelCell = row.insertCell();
-        labelCell.innerText = dataRow.label;
-        if (dataRow.note) {
-            const noteIcon = document.createElement("span");
-            noteIcon.classList.add("decoder-note");
-            noteIcon.setAttribute("title", dataRow.note);
-            noteIcon.textContent = "?";
-            labelCell.appendChild(noteIcon);
-        }
-        const bitCell = row.insertCell();
-        const endBit = startBit + dataRow.length - 1;
-        bitCell.classList.add("bits");
-        bitCell.innerText = dataRow.length === 1 ? `${startBit}` : `${startBit}..${endBit}`;
-        const valueCell = row.insertCell();
-        valueCell.classList.add("value");
-
-        let valueString;
-        if (dataRow.as === undefined) {
-            dataRow.as = "decimal";
-        }
-
-        switch (dataRow.as) {
-            case "hex":
-                valueString = `0x${value.toString(16)}`;
-                break;
-            case "decimal":
-                valueString = value.toString(10);
-                break;
-            case "boolean":
-                valueString = value === 0n ? "false" : "true";
-                break;
-            default:
-                break;
-        }
-
-        if (dataRow.match !== undefined) {
-            valueCell.innerText = `${dataRow.match[value]}`;
-        } else {
-            valueCell.innerText = valueString;
-        }
-    }
+    processRows(decoders[selectedDecoder].data, { i: 0 });
 };
 
 /* Share */
