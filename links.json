@@ -3,10 +3,6 @@
         {
             "name": "OSDev Calculator",
             "url": "/"
-        },
-        {
-            "name": "Qemu Analyzer",
-            "url": "/qemu-analyzer.html"
         }
     ],
     "quick": [
