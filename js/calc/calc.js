@@ -396,3 +396,32 @@ const applyInitialValueFromQuery = () => {
 };
 
 applyInitialValueFromQuery();
+
+/* Global paste */
+document.addEventListener("paste", (event) => {
+    const active = document.activeElement;
+    if (active === decimal || active === hex) return;
+
+    const text = (event.clipboardData || window.clipboardData).getData("text").trim();
+    if (!text) return;
+
+    let value;
+    try {
+        if (/^0x/i.test(text)) {
+            value = BigInt(text);
+        } else if (/^0b/i.test(text)) {
+            value = BigInt(text);
+        } else if (/^0o/i.test(text)) {
+            value = BigInt(text);
+        } else if (/[a-f]/i.test(text)) {
+            value = BigInt("0x" + text);
+        } else {
+            value = BigInt(text);
+        }
+    } catch {
+        return;
+    }
+
+    event.preventDefault();
+    setCurrentValue(value);
+});
