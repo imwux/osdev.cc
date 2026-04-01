@@ -10,7 +10,9 @@
             { "length": 1, "label": "Instruction Fetch", "as": "boolean" },
             { "length": 1, "label": "Protection Key", "as": "boolean" },
             { "length": 1, "label": "Shadow Stack", "as": "boolean" },
+            { "length": 1, "label": "HLAT", "as": "boolean" },
             {
+                "position": 15,
                 "length": 1,
                 "label": "Software Guard Extensions",
                 "as": "boolean"
@@ -50,7 +52,7 @@
             { "length": 1, "label": "Interrupt Enable Flag", "as": "boolean" },
             { "length": 1, "label": "Direction Flag", "as": "boolean" },
             { "length": 1, "label": "Overflow Flag", "as": "boolean" },
-            { "length": 2, "label": "I/O Privilege Level", "as": "boolean" },
+            { "length": 2, "label": "I/O Privilege Level", "as": "decimal" },
             { "length": 1, "label": "Nested Task", "as": "boolean" },
             { "length": 1, "label": "Reserved", "as": "boolean" },
             { "length": 1, "label": "Resume Flag", "as": "boolean" },
@@ -197,38 +199,92 @@
         "name": "x86_64 - GDT Segment Descriptor",
         "data": [
             { "length": 16, "label": "Segment Limit (0..15)", "as": "hex" },
-            { "length": 24, "label": "Base Address (0..24)", "as": "hex" },
+            { "length": 24, "label": "Base Address (0..23)", "as": "hex" },
             { "length": 4, "label": "Segment Type", "as": "hex" },
-            { "length": 1, "label": "Descriptor Type (0 = system; 1 = code/data)", "as": "boolean" },
-            { "length": 2, "label": "Descriptor Privilege Level", "as": "decimal" },
+            {
+                "length": 1,
+                "label": "Descriptor Type",
+                "as": "boolean",
+                "note": "false = system segment; 1 = code/data segment"
+            },
+            {
+                "length": 2,
+                "label": "Descriptor Privilege Level",
+                "as": "decimal"
+            },
             { "length": 1, "label": "Present", "as": "boolean" },
             { "length": 4, "label": "Segment Limit (16..19)", "as": "hex" },
             { "length": 1, "label": "Available", "as": "boolean" },
             { "length": 1, "label": "64-bit code segment", "as": "boolean" },
-            { "length": 1, "label": "Default operation size (true = 16-bit; false = 32-bit)", "as": "boolean" },
+            {
+                "length": 1,
+                "label": "Default operation size",
+                "as": "boolean",
+                "note": "0 = 16-bit segment, 1 = 32-bit segment"
+            },
             { "length": 1, "label": "Granularity", "as": "boolean" },
-            { "length": 8, "label": "Base Address (24..32)", "as": "hex" }
+            { "length": 8, "label": "Base Address (24..31)", "as": "hex" }
         ]
     },
     {
         "id": "x86_64-cr3",
         "name": "x86_64 - Register - CR3",
         "data": [
-            { "position": 3, "length": 1, "label": "Page-level write-through", "as": "boolean" },
-            { "length": 1, "label": "Page-level cache disable", "as": "boolean" },
-            { "position": 12, "length": 49, "label": "Physical address of pml4", "as": "hex", "note": "Length varies" },
-            { "length": 1, "label": "LAM57 for user pointers", "as": "boolean" },
-            { "length": 1, "label": "LAM48 for user pointers", "as": "boolean", "note": "Ignored if bit 61 is set" }
+            {
+                "position": 3,
+                "length": 1,
+                "label": "Page-level write-through",
+                "as": "boolean"
+            },
+            {
+                "length": 1,
+                "label": "Page-level cache disable",
+                "as": "boolean"
+            },
+            {
+                "position": 12,
+                "length": 40,
+                "label": "Physical address of pml4",
+                "as": "hex",
+                "note": "Length varies depending on the value of MAXPHYSADDR"
+            },
+            {
+                "position": 61,
+                "length": 1,
+                "label": "LAM57 for user pointers",
+                "as": "boolean"
+            },
+            {
+                "length": 1,
+                "label": "LAM48 for user pointers",
+                "as": "boolean",
+                "note": "Ignored if bit 61 is set"
+            }
         ]
     },
-        {
+    {
         "id": "x86_64-cr3-pcid",
         "name": "x86_64 - Register - CR3 (PCID)",
         "data": [
             { "length": 12, "label": "PCID", "as": "decimal" },
-            { "length": 49, "label": "Physical address of pml4", "as": "hex", "note": "Length varies" },
-            { "length": 1, "label": "LAM57 for user pointers", "as": "boolean" },
-            { "length": 1, "label": "LAM48 for user pointers", "as": "boolean", "note": "Ignored if bit 61 is set" }
+            {
+                "length": 40,
+                "label": "Physical address of pml4",
+                "as": "hex",
+                "note": "Length varies depending on the value of MAXPHYSADDR"
+            },
+            {
+                "position": 61,
+                "length": 1,
+                "label": "LAM57 for user pointers",
+                "as": "boolean"
+            },
+            {
+                "length": 1,
+                "label": "LAM48 for user pointers",
+                "as": "boolean",
+                "note": "Ignored if bit 61 is set"
+            }
         ]
     }
 ]
