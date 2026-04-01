@@ -136,6 +136,28 @@ const updateDecoder = () => {
     }
 };
 
+/* Share */
+const shareBtn = document.getElementById("share-btn");
+const shareIcon = document.getElementById("share-icon");
+const shareIconCheck = document.getElementById("share-icon-check");
+
+shareBtn.addEventListener("click", () => {
+    const params = new URLSearchParams();
+    params.set("value", "0x" + currentValue.toString(16));
+    if (selectedDecoder >= 0 && decoders[selectedDecoder]) {
+        params.set("decoder", decoders[selectedDecoder].id);
+    }
+    const url = `${location.origin}${location.pathname}?${params}`;
+    navigator.clipboard.writeText(url).then(() => {
+        shareIcon.style.display = "none";
+        shareIconCheck.style.display = "";
+        setTimeout(() => {
+            shareIcon.style.display = "";
+            shareIconCheck.style.display = "none";
+        }, 1500);
+    });
+});
+
 /* Decoder */
 updateDecoder();
 
