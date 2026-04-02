@@ -246,6 +246,7 @@
                 "length": 40,
                 "label": "Physical address of pml4",
                 "as": "hex",
+                "shift": 12,
                 "note": "Length varies depending on the value of MAXPHYSADDR"
             },
             {
@@ -271,6 +272,7 @@
                 "length": 40,
                 "label": "Physical address of pml4",
                 "as": "hex",
+                "shift": 12,
                 "note": "Length varies depending on the value of MAXPHYSADDR"
             },
             {
@@ -297,7 +299,7 @@
             { "length": 1, "label": "Page-level Write-Through", "as": "boolean" },
             { "length": 1, "label": "Page-level Cache Disable", "as": "boolean" },
             { "length": 1, "label": "Accessed", "as": "boolean" },
-            { "position": 12, "length": 40, "label": "Physical address of PDPT", "as": "hex" },
+            { "position": 12, "length": 40, "label": "Physical address of PDPT", "as": "hex", "shift": 12 },
             { "position": 63, "length": 1, "label": "Execute Disable", "as": "boolean" }
         ]
     },
@@ -318,13 +320,13 @@
                 "as": "boolean",
                 "branch": {
                     "0": [
-                        { "position": 12, "length": 40, "label": "Physical address of PD", "as": "hex" },
+                        { "position": 12, "length": 40, "label": "Physical address of PD", "as": "hex", "shift": 12 },
                         { "position": 63, "length": 1, "label": "Execute Disable", "as": "boolean" }
                     ],
                     "1": [
                         { "length": 1, "label": "Global", "as": "boolean" },
                         { "position": 12, "length": 1, "label": "PAT", "as": "boolean" },
-                        { "position": 30, "length": 22, "label": "Physical address of 1GB page", "as": "hex" },
+                        { "position": 30, "length": 22, "label": "Physical address of 1GB page", "as": "hex", "shift": 30 },
                         { "position": 59, "length": 4, "label": "Protection Key", "as": "decimal" },
                         { "length": 1, "label": "Execute Disable", "as": "boolean" }
                     ]
@@ -349,13 +351,13 @@
                 "as": "boolean",
                 "branch": {
                     "0": [
-                        { "position": 12, "length": 40, "label": "Physical address of PT", "as": "hex" },
+                        { "position": 12, "length": 40, "label": "Physical address of PT", "as": "hex", "shift": 12 },
                         { "position": 63, "length": 1, "label": "Execute Disable", "as": "boolean" }
                     ],
                     "1": [
                         { "length": 1, "label": "Global", "as": "boolean" },
                         { "position": 12, "length": 1, "label": "PAT", "as": "boolean" },
-                        { "position": 21, "length": 31, "label": "Physical address of 2MB page", "as": "hex" },
+                        { "position": 21, "length": 31, "label": "Physical address of 2MB page", "as": "hex", "shift": 21 },
                         { "position": 59, "length": 4, "label": "Protection Key", "as": "decimal" },
                         { "length": 1, "label": "Execute Disable", "as": "boolean" }
                     ]
@@ -376,7 +378,7 @@
             { "length": 1, "label": "Dirty", "as": "boolean" },
             { "length": 1, "label": "PAT", "as": "boolean" },
             { "length": 1, "label": "Global", "as": "boolean" },
-            { "position": 12, "length": 40, "label": "Physical address of 4KB page", "as": "hex" },
+            { "position": 12, "length": 40, "label": "Physical address of 4KB page", "as": "hex", "shift": 12 },
             { "position": 59, "length": 4, "label": "Protection Key", "as": "decimal" },
             { "length": 1, "label": "Execute Disable", "as": "boolean" }
         ]

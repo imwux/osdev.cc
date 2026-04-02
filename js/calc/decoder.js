@@ -113,16 +113,17 @@ const updateDecoder = () => {
             valueCell.classList.add("value");
 
             const as = dataRow.as ?? "decimal";
+            const displayValue = dataRow.shift !== undefined ? value << BigInt(dataRow.shift) : value;
             let valueString;
             switch (as) {
                 case "hex":
-                    valueString = `0x${value.toString(16)}`;
+                    valueString = `0x${displayValue.toString(16)}`;
                     break;
                 case "decimal":
-                    valueString = value.toString(10);
+                    valueString = displayValue.toString(10);
                     break;
                 case "boolean":
-                    valueString = value === 0n ? "false" : "true";
+                    valueString = displayValue === 0n ? "false" : "true";
                     break;
                 default:
                     break;
